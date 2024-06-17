@@ -8,7 +8,7 @@ public class SliderConfirm : MonoBehaviour
 {
 
     public TMP_Text NumberText;
-    int _number;
+    static float _number;
 
 
     private void Start()
@@ -22,85 +22,22 @@ public class SliderConfirm : MonoBehaviour
         NumberText.text = "您心中所想數字為 :" +  _number.ToString();
     }
 
-    public void Slider1(float n)
+    public void Slider(float n)
     {
-        Debug.Log(n);
-        if(n == 1)
+        
+        switch (n)
         {
-            _number += 1;
-        }
-        else if (n == 0)
-        {
-            _number -= 1;
+            case 0:
+                _number -= Mathf.Pow(2.0f, (GameManage.index));
+                break;
+
+            case 1:
+                _number += Mathf.Pow(2.0f, (GameManage.index));
+                break;
         }
 
     }
 
-    public void Slider2(float n)
-    {
-        Debug.Log(n);
-        if (n == 1)
-        {
-            _number += 2;
-        }
-        else if (n == 0)
-        {
-            _number -= 2;
-        }
-    }
-
-    public void Slider3(float n)
-    {
-        Debug.Log(n);
-        if (n == 1)
-        {
-            _number += 4;
-        }
-        else if (n == 0)
-        {
-            _number -= 4;
-        }
-    }
-
-    public void Slider4(float n)
-    {
-        Debug.Log(n);
-        if (n == 1)
-        {
-            _number += 8;
-        }
-        else if (n == 0)
-        {
-            _number -= 8;
-        }
-    }
-
-    public void Slider5(float n)
-    {
-        Debug.Log(n);
-        if (n == 1)
-        {
-            _number += 16;
-        }
-        else if (n == 0)
-        {
-            _number -= 16;
-        }
-    }
-
-    public void Slider6(float n)
-    {
-        Debug.Log(n);
-        if (n == 1)
-        {
-            _number += 32;
-        }
-        else if (n == 0)
-        {
-            _number -= 32;
-        }
-        Debug.Log(_number);
-    }
 
 
 
