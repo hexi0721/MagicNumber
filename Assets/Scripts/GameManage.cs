@@ -34,10 +34,6 @@ public class GameManage : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             mousePositionO = Input.mousePosition;
-
-
-
-
         }
 
         if (Input.GetMouseButton(0)) 
@@ -45,13 +41,15 @@ public class GameManage : MonoBehaviour
             mousePositon = Input.mousePosition;
 
             float PositionX = Mathf.Abs(mousePositon.x - mousePositionO.x);
-
-            if (mousePositon.x < mousePositionO.x) // 往右
+            float s01 = Input.GetAxis("Mouse X");
+            if (mousePositon.x < mousePositionO.x && s01 < 0f) // 往右
             {
+                
+
                 for (int i = 0; i < Image.Count; i++)
                 {
                     Image[i].anchoredPosition = Vector2.Lerp(Image[i].anchoredPosition , new Vector2(Image[i].anchoredPosition.x - PositionX, 0) , speed*Time.deltaTime);
-
+                    
 
                 }
 
@@ -61,12 +59,12 @@ public class GameManage : MonoBehaviour
 
                 
             }
-            else if (mousePositon.x > mousePositionO.x) // 往左
+            else if (mousePositon.x > mousePositionO.x && s01 > 0f) // 往左
             {
                 for (int i = 0; i < Image.Count; i++)
                 {
                     Image[i].anchoredPosition = Vector2.Lerp(Image[i].anchoredPosition, new Vector2(Image[i].anchoredPosition.x + PositionX, 0), speed * Time.deltaTime);
-
+                    
 
                 }
 
@@ -85,7 +83,7 @@ public class GameManage : MonoBehaviour
                 for (int i = 0; i < Image.Count; i++)
                 {
                     Image[i].anchoredPosition = new Vector2(Image[i].anchoredPosition.x - width, 0);
-                    //direction = false;
+                    
 
                 }
 
@@ -96,7 +94,7 @@ public class GameManage : MonoBehaviour
                 for (int i = 0; i < Image.Count; i++)
                 {
                     Image[i].anchoredPosition = new Vector2(Image[i].anchoredPosition.x + width, 0);
-                    //direction = true;
+                    
                 }
 
                 index -= 1;
