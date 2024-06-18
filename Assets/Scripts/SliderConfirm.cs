@@ -19,7 +19,7 @@ public class SliderConfirm : MonoBehaviour
 
     private void Update()
     {
-        NumberText.text = "您心中所想數字為 :" +  _number.ToString();
+        NumberText.text = "您心中所想數字是\n" +  _number.ToString();
     }
 
     public void Slider(float n)
