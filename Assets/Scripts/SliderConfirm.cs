@@ -7,38 +7,28 @@ using TMPro;
 public class SliderConfirm : MonoBehaviour
 {
 
-    public TMP_Text NumberText;
-    static float _number;
-
+    Toggle toggle;
 
     private void Start()
     {
-        _number = 0;
-        NumberText = GameObject.Find("Answer").GetComponent<TMP_Text>();
+        toggle = GetComponent<Toggle>();
     }
 
-    private void Update()
-    {
-        NumberText.text = "您心中所想數字是\n" +  _number.ToString();
-    }
-
-    public void Slider(float n)
+    public void Toggles()
     {
         
-        switch (n)
+        switch (toggle.isOn)
         {
-            case 0:
-                _number -= Mathf.Pow(2.0f, (GameManage.index));
+            case false:
+                GameManage.number -= Mathf.Pow(2.0f, (GameManage.index));
                 break;
 
-            case 1:
-                _number += Mathf.Pow(2.0f, (GameManage.index));
+            case true:
+                GameManage.number += Mathf.Pow(2.0f, (GameManage.index));
                 break;
         }
 
     }
-
-
 
 
 

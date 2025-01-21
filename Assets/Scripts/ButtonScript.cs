@@ -8,19 +8,17 @@ using UnityEngine.UI;
 public class ButtonScript : MonoBehaviour
 {
 
-    public void DisableAll()
+    public void DisableAll() // on the NextButton GameObject
     {
 
-
-        GetComponent<NextButton>().Images.SetActive(false);
-        GetComponent<NextButton>().Sliders.SetActive(false);
+        GetComponent<NextButton>().toggles.SetActive(false);
         GetComponent<NextButton>().HowToPlay.SetActive(false);
 
-        GetComponent<NextButton>()._confirm = true;
+        TMP_Text m_NumberText = GetComponent<NextButton>().NumberText;
+        m_NumberText.gameObject.SetActive(true);
+        m_NumberText.text = "您心中所想數字是" + GameManage.number;
 
-        
-
-        TMP_Text ButtonText = this.gameObject.transform.GetChild(0).GetComponent<TMP_Text>();
+        TMP_Text ButtonText = transform.GetChild(0).GetComponent<TMP_Text>();
         ButtonText.text = "再試一次";
 
         Button button = GetComponent<Button>();
@@ -49,4 +47,5 @@ public class ButtonScript : MonoBehaviour
         }
         
     }
+
 }

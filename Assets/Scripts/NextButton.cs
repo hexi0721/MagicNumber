@@ -8,34 +8,15 @@ using UnityEngine.UI;
 public class NextButton : MonoBehaviour
 {
     
-    public GameObject Images;
-    public GameObject Sliders;
+    public GameObject toggles;
     public GameObject HowToPlay;
     
-    public TMP_Text NumberText;
-
-    float _alpha;
-    public bool _confirm;
-    
-
+    [HideInInspector] public TMP_Text NumberText;
 
     private void Start()
     {
-        _confirm = false;
-        _alpha = 0;
+        NumberText = GameObject.Find("Answer").GetComponent<TMP_Text>();
+        NumberText.gameObject.SetActive(false);
     }
-
-    private void Update()
-    {
-        if(_confirm && _alpha < 255f)
-        {
-            _alpha += 2f * Time.deltaTime;
-            NumberText.color = new Color(NumberText.color.r, NumberText.color.b, NumberText.color.g, _alpha);
-        }
-        
-    }
-
-    
-
 
 }
