@@ -11,6 +11,17 @@ public class ButtonScript : MonoBehaviour
     public void DisableAll() // on the NextButton GameObject
     {
 
+        // 如果不在 1 ~ 63 之間
+
+        if(GameManage.number < 1 || GameManage.number > 63)
+        {
+            GetComponent<NextButton>().wrongMsg.SetActive(true);
+            return;
+        }
+
+
+        //
+
         GetComponent<NextButton>().toggles.SetActive(false);
         GetComponent<NextButton>().HowToPlay.SetActive(false);
 
@@ -47,5 +58,7 @@ public class ButtonScript : MonoBehaviour
         }
         
     }
+
+    
 
 }

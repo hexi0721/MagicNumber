@@ -10,7 +10,8 @@ public class NextButton : MonoBehaviour
     
     public GameObject toggles;
     public GameObject HowToPlay;
-    
+    public GameObject wrongMsg;
+
     [HideInInspector] public TMP_Text NumberText;
 
     private void Start()
