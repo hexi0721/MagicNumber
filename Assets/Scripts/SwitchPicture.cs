@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using static UnityEngine.UI.Image;
 
-public class SwitchPicture : MonoBehaviour , IPointerDownHandler, IPointerUpHandler , IDragHandler
+public class SwitchPicture : MonoBehaviour // , IPointerDownHandler, IPointerUpHandler , IDragHandler
 {
 
     [SerializeField] float origin ;
@@ -46,7 +46,7 @@ public class SwitchPicture : MonoBehaviour , IPointerDownHandler, IPointerUpHand
         }
         
     }
-
+    /*
     #region ¨Æ¥ó
 
     public void OnPointerDown(PointerEventData eventData)
@@ -112,4 +112,5 @@ public class SwitchPicture : MonoBehaviour , IPointerDownHandler, IPointerUpHand
     }
 
     #endregion
+    */
 }

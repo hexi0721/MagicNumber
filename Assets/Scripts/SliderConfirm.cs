@@ -16,7 +16,7 @@ public class SliderConfirm : MonoBehaviour
 
     public void Toggles()
     {
-        
+        /*
         switch (toggle.isOn)
         {
             case false:
@@ -27,7 +27,7 @@ public class SliderConfirm : MonoBehaviour
                 GameManage.number += Mathf.Pow(2.0f, (GameManage.index));
                 break;
         }
-
+        */
     }
 
 
