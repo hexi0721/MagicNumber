@@ -1,64 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class NextButton : MonoBehaviour
 {
+    TextMeshProUGUI numberText , wrongMsgText;
+    GameObject bottomObj;
+
+    Func<int> GetTotalAnswerFunc;
+
+    [SerializeField] GameObject hintButtonObj;
+    Button replayButton;
 
 
-    [SerializeField] GameObject wrongMsg;
-    [SerializeField] TMP_Text NumberText;
-    [SerializeField] GameObject Bottom;
-
-    // [SerializeField] GameManage gameManage;
-    [SerializeField] List<圖片> ImgaeList;
-    [SerializeField] int number;
-
-    private void Start()
+    public void GetTotalAnswer(int totalAnswer)
     {
-        GetComponent<Button>().onClick.AddListener(DisableAll);
-        NumberText.gameObject.SetActive(false);
-        number = 0;
+        SetGetTotalAnswerFunc(() => totalAnswer);
+    }
+    
+    public void SetGetTotalAnswerFunc(Func<int> GetTotalAnswerFunc)
+    {
+        this.GetTotalAnswerFunc = GetTotalAnswerFunc;
     }
 
-    public void DisableAll() 
+    public void SetUp(TextMeshProUGUI numberText ,  TextMeshProUGUI wrongMsgText , GameObject bottomObj , Button replayButton)
     {
-        /*
-        foreach(圖片 image in ImgaeList)
-        {
-            if (image.manager.checkBoxisOn)
-            {
-                number += Mathf.RoundToInt(Mathf.Pow(2.0f, image.manager.index));
-            }
-        }
-        */
+        this.numberText = numberText;
+        this.wrongMsgText = wrongMsgText;
+        this.bottomObj = bottomObj;
+        this.replayButton = replayButton;
+    }
 
-        if (!ImgaeList[0].manager.checkBoxisOn)
-        {
-            number += Mathf.RoundToInt(Mathf.Pow(2.0f, ImgaeList[0].manager.index));
-        }
 
+
+    public void AfterCalcute() 
+    {
+        int totalAnswer = GetTotalAnswerFunc();
 
         // 如果不在 1 ~ 63 之間
-        if (number < 1 || number > 63)
+        if (totalAnswer < 1 || totalAnswer > 63)
         {
-            wrongMsg.SetActive(true);
+            wrongMsgText.gameObject.SetActive(true);
             return;
         }
-
-        NumberText.gameObject.SetActive(true);
-        NumberText.text = "您心中所想數字是" + number;
-
-
-        int BottomChildCount = Bottom.transform.childCount;
-        for (int i = 0;i < BottomChildCount;i++)
+        else
         {
-            Bottom.transform.GetChild(i).gameObject.SetActive(false);
+            numberText.gameObject.SetActive(true);
+            numberText.text = "您心中所想數字是" + totalAnswer;
         }
 
+        // 關掉一些按鈕，只開啟Replaybutton
+        int BottomChildCount = bottomObj.transform.childCount;
+        for (int i = 0; i < BottomChildCount; i++)
+        {
+            bottomObj.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        hintButtonObj.SetActive(false);
+        replayButton.gameObject.SetActive(true);
         gameObject.SetActive(false);
 
     }

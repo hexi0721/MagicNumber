@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,29 +9,27 @@ public class 圖片 : MonoBehaviour
 {
 
     [SerializeField] int index;
-    [SerializeField] Button CheckBox;
+    [SerializeField] bool checkBoxisOn;
 
-    public Manager manager;
-
-    private void Start()
+    public void Setup(int index , bool checkBoxisOn)
     {
-
-        char lastChar = transform.name[transform.name.Length - 1];
-        index = (int)char.GetNumericValue(lastChar);
-        manager = new Manager(index, true);
-
-        CheckBox.onClick.AddListener(() => { });
+        this.index = index;
+        this.checkBoxisOn = checkBoxisOn;
     }
 
-    private void Update()
+    public void SetCheckBoxisOn(bool checkBoxisOn)
     {
-        
-        
-
-
-
-
+        this.checkBoxisOn = checkBoxisOn;
     }
 
+    public bool GetCheckBoxisOn()
+    {
+        return checkBoxisOn;
+    }
+
+    public int GetIndex()
+    {
+        return index;
+    }
 
 }
