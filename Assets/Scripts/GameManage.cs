@@ -21,47 +21,43 @@ public class GameManage : MonoBehaviour
     [SerializeField] GameObject bottomObj;
 
     [SerializeField] Button replayButton;
+    [SerializeField] int firstLogin; // 0代表首次登入 ， 1代表有登入過
 
     [SerializeField] Button leftButton , rightButton;
     int index = 0;
+
+    [SerializeField] Button hintButton;
+    [SerializeField] 教學父件 教學父件;
+    [SerializeField] Image 教學動畫進行時禁止其他UI動作;
+
+
+    [SerializeField] Button 消除pref;
+
 
     private void Start()
     {
         CheckBoxAction();
         NextButtonAction();
-        replayButton.onClick.AddListener(() => { SceneManager.LoadScene("MainScene"); });
 
-        rightButton.onClick.AddListener(() =>
+        
+        replayButton.onClick.AddListener(() => 
         {
-            image[index].gameObject.SetActive(false);
-            checkbox[index].gameObject.SetActive(false);
-
-            index += 1;
-            if (index > 5)
-                index = 5;
-
-            image[index].gameObject.SetActive(true);
-            checkbox[index].gameObject.SetActive(true);
-
-
+            SceneManager.LoadScene("MainScene"); 
         });
 
-        leftButton.onClick.AddListener(() =>
+        RightButtonAction();
+        LeftButtonAction();
+
+
+
+        教學模式Aciton();
+
+
+        消除pref.onClick.AddListener(() => 
         {
-            image[index].gameObject.SetActive(false);
-            checkbox[index].gameObject.SetActive(false);
-
-            index -= 1;
-            if (index < 0)
-                index = 0;
-
-            image[index].gameObject.SetActive(true);
-            checkbox[index].gameObject.SetActive(true);
-
-
+            PlayerPrefs.DeleteKey("firstLogin");
+            Debug.Log("已消除firstLogin");
         });
-
-
 
     }
 
@@ -109,5 +105,55 @@ public class GameManage : MonoBehaviour
 
         });
     }
+
+    private void RightButtonAction()
+    {
+        rightButton.onClick.AddListener(() =>
+        {
+            image[index].gameObject.SetActive(false);
+            checkbox[index].gameObject.SetActive(false);
+
+            index += 1;
+            if (index > 5)
+                index = 5;
+
+            image[index].gameObject.SetActive(true);
+            checkbox[index].gameObject.SetActive(true);
+
+
+        });
+    }
+
+    private void LeftButtonAction()
+    {
+        leftButton.onClick.AddListener(() =>
+        {
+            image[index].gameObject.SetActive(false);
+            checkbox[index].gameObject.SetActive(false);
+
+            index -= 1;
+            if (index < 0)
+                index = 0;
+
+            image[index].gameObject.SetActive(true);
+            checkbox[index].gameObject.SetActive(true);
+
+
+        });
+    }
+
+    private void 教學模式Aciton()
+    {
+        firstLogin = PlayerPrefs.GetInt("firstLogin", 0);
+        int 教學父件child = 4 , path = 0;
+        教學父件.SetUp(教學父件child, path , 教學動畫進行時禁止其他UI動作 , firstLogin);
+        hintButton.onClick.AddListener(() =>
+        {
+
+            教學父件.gameObject.SetActive(true);
+            教學父件.動畫出現();
+        });
+    }
+
 
 }
