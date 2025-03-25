@@ -30,12 +30,10 @@ public class GameManage : MonoBehaviour
     [SerializeField] 教學父件 教學父件;
     [SerializeField] Image 教學動畫進行時禁止其他UI動作;
 
-
-    [SerializeField] Button 消除pref;
-
-
     private void Start()
     {
+        Application.targetFrameRate = 60;
+
         CheckBoxAction();
         NextButtonAction();
 
@@ -48,16 +46,8 @@ public class GameManage : MonoBehaviour
         RightButtonAction();
         LeftButtonAction();
 
-
-
         教學模式Aciton();
 
-
-        消除pref.onClick.AddListener(() => 
-        {
-            PlayerPrefs.DeleteKey("firstLogin");
-            Debug.Log("已消除firstLogin");
-        });
 
     }
 
@@ -145,15 +135,14 @@ public class GameManage : MonoBehaviour
     private void 教學模式Aciton()
     {
         firstLogin = PlayerPrefs.GetInt("firstLogin", 0);
-        int 教學父件child = 4 , path = 0;
-        教學父件.SetUp(教學父件child, path , 教學動畫進行時禁止其他UI動作 , firstLogin);
+        int childIndex = 4;
+        教學父件.SetUp(childIndex, 教學動畫進行時禁止其他UI動作 , firstLogin);
         hintButton.onClick.AddListener(() =>
         {
 
             教學父件.gameObject.SetActive(true);
-            教學父件.動畫出現();
+            教學父件.動畫出現(childIndex);
         });
     }
-
 
 }

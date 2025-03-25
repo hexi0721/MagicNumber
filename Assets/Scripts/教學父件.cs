@@ -1,44 +1,55 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
 public class 教學父件 : MonoBehaviour , IPointerClickHandler
 {
     
-    int choosePath , index , firstlogin;
+    int childCount , firstlogin;
     Image 教學動畫進行時禁止其他UI動作;
-    Animator animator;
+
     [SerializeField] List<Transform> child;
 
     [SerializeField] Button hintButton;
-    
+    [SerializeField] float speed = 10f;
 
-    public void SetUp(int index , int choosePath , Image 教學動畫進行時禁止其他UI動作 , int firstlogin)
+
+    public void SetUp(int childCount, Image 教學動畫進行時禁止其他UI動作 , int firstlogin)
     {
-        this.index = index;
-        this.choosePath = choosePath;
+        this.childCount = childCount;
         this.教學動畫進行時禁止其他UI動作 = 教學動畫進行時禁止其他UI動作;
         this.firstlogin = firstlogin;
     }
     
-    public void 動畫出現()
+    public void 動畫出現(int childCount)
     {
-        index = 4;
-        animator.SetInteger("Path", 2);
+        this.childCount = childCount;
+
         教學動畫進行時禁止其他UI動作.gameObject.SetActive(true);
 
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(true);
         }
+
+        GetComponent<RectTransform>().localPosition = Vector3.zero;
+        /*
+        GetComponent<RectTransform>().localScale = Vector3.one;
+
+        Color color = GetComponent<Image>().color;
+        color.a = 0.4f;
+        GetComponent<Image>().color = color;
+        */
+
     }
     
     private void Start()
     {
-        animator = GetComponent<Animator>();
-        animator.SetInteger("Path", choosePath);
+
 
         child = new List<Transform>();
         for (int i = 0; i < transform.childCount; i++)
@@ -52,33 +63,64 @@ public class 教學父件 : MonoBehaviour , IPointerClickHandler
             gameObject.SetActive(false);
         }
 
+        
+    }
 
-        Debug.Log(hintButton.GetComponent<RectTransform>().position);
-        Debug.Log(GetComponent<RectTransform>().position);
+
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        child[childCount].gameObject.SetActive(false);
+        childCount -= 1;
+
+        if (childCount < 1)
+        {
+            childCount = 1;
+            child[childCount - 1].gameObject.SetActive(false);
+
+            StartCoroutine(消失動畫());
+        }
+
+        child[childCount].gameObject.SetActive(true);
 
     }
 
-    public void AnimatorEndEvent()
+    private IEnumerator 消失動畫()
     {
-        PlayerPrefs.SetInt("firstLogin" , 1);
+
+        RectTransform rectTransform = GetComponent<RectTransform>();
+        float width = rectTransform.rect.width;
+        float posX = rectTransform.localPosition.x;
+
+
+        while (posX > -width) 
+        {
+
+            posX = rectTransform.localPosition.x - speed * Time.deltaTime;
+            rectTransform.localPosition = new Vector3(posX , rectTransform.localPosition.y);
+
+            if (posX <= -width)
+            {
+                posX = -width;
+                rectTransform.localPosition = new Vector3(posX, rectTransform.localPosition.y);
+            }
+
+
+            yield return null;
+        }
+
+
+        AnimatorEndEvent();
+    }
+
+    private void AnimatorEndEvent()
+    {
+        PlayerPrefs.SetInt("firstLogin", 1);
+        
         教學動畫進行時禁止其他UI動作.gameObject.SetActive(false);
         gameObject.SetActive(false);
 
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        child[index].gameObject.SetActive(false);
-        index -= 1;
 
-        if (index < 1)
-        {
-            index = 1;
-            choosePath = 1;
-            animator.SetInteger("Path", choosePath); // 執行消失動畫
-        }
-
-        child[index].gameObject.SetActive(true);
-
-    }
 }
