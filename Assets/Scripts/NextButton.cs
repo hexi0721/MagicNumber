@@ -18,6 +18,7 @@ public class NextButton : MonoBehaviour
     [SerializeField] GameObject hintButtonObj;
     Button replayButton;
 
+    [SerializeField] ParticleSystem leftParticleSystem, rightParticleSystem;
 
     public void GetTotalAnswer(int totalAnswer)
     {
@@ -82,6 +83,10 @@ public class NextButton : MonoBehaviour
             yield return null;
         }
 
+
+        leftParticleSystem.gameObject.SetActive(true);
+        rightParticleSystem.gameObject.SetActive(true);
+        AudioManager.Instance.PlayAudio(AudioManager.Instance.yeahAudio);
         numberText.text = "您心中所想數字是" + totalAnswer;
         
         replayButton.gameObject.SetActive(true);
