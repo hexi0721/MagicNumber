@@ -30,6 +30,7 @@ public class GameManage : MonoBehaviour
     [SerializeField] 教學父件 教學父件;
     [SerializeField] Image 教學動畫進行時禁止其他UI動作;
 
+
     private void Start()
     {
         Application.targetFrameRate = 60;
@@ -49,6 +50,14 @@ public class GameManage : MonoBehaviour
         教學模式Aciton();
 
 
+    }
+
+    private void Update()
+    {
+        if (Application.targetFrameRate != 60)
+        {
+            Application.targetFrameRate = 60;
+        }
     }
 
     private void CheckBoxAction()
